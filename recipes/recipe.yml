@@ -20,8 +20,9 @@ modules:
   # Install kernel headers temporarily
   - type: dnf
     install:
-      - kernel-devel
-      - kernel-headers
+      packages:
+        - kernel-devel
+        - kernel-headers
 
   # Run r8168 build script
   - type: script
@@ -31,7 +32,8 @@ modules:
   # Remove kernel headers
   - type: dnf
     remove:
-      - kernel-devel
-      - kernel-headers
+      packages:
+        - kernel-devel
+        - kernel-headers
 
   - type: signing # this sets up the proper policy & signing files for signed images to work fully
