@@ -17,11 +17,12 @@ cd r8168-${VERSION}
 pushd /usr/src/kernels
 KERNEL=$(ls -d * | head -n1)
 popd
-KERNELDIR="/lib/modules/$KERNEL/build"
-echo "Building r8168 against kernel: $KERNEL"
+KERNELDIR="/lib/modules/${KERNEL}/build"
+echo "Building r8168 against kernel: ${KERNEL}"
 ls -la /lib/modules
 
 # Build
-make all
+cd src
+make KERNELDIR="${KERNELDIR}" all
 
 rm -rf /tmp/r8168.tar.gz /tmp/r8168-${VERSION}
