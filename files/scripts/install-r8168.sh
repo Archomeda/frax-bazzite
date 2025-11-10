@@ -18,6 +18,6 @@ KERNEL_DIR=$(ls -d /usr/src/kernels/* | head -n1)
 echo "Building r8168 against kernel source at: $KERNEL_DIR"
 
 # Build
-make all KSRC="$KERNEL_DIR"
+make -C "$KERNEL_DIR" M="$(pwd)" all
 
 rm -rf /tmp/r8168.tar.gz /tmp/r8168-${VERSION}
