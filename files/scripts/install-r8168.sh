@@ -7,11 +7,17 @@ set -oue pipefail
 
 VERSION="8.055.00"
 
+# Download the driver
 cd /tmp
 wget -q https://github.com/mtorromeo/r8168/archive/refs/tags/${VERSION}.tar.gz -O r8168.tar.gz
 tar xf r8168.tar.gz
 cd r8168-${VERSION}
 
-make all
+# Detect target kernel source directory (from the image, not host)
+KERNEL_DIR=$(ls -d /usr/src/kernels/* | head -n1)
+echo "Building r8168 against kernel source at: $KERNEL_DIR"
+
+# Build
+make all KSRC="$KERNEL_DIR"
 
 rm -rf /tmp/r8168.tar.gz /tmp/r8168-${VERSION}
