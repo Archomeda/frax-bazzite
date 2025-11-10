@@ -14,10 +14,14 @@ tar xf r8168.tar.gz
 cd r8168-${VERSION}
 
 # Detect target kernel source directory (from the image, not host)
-KERNEL_DIR=$(ls -d /usr/src/kernels/* | head -n1)
-echo "Building r8168 against kernel source at: $KERNEL_DIR"
+pushd /usr/src/kernels
+KERNEL=$(ls -d * | head -n1)
+popd
+KERNELDIR="/lib/modules/$KERNEL/build"
+echo "Building r8168 against kernel: $KERNEL"
+ls -la /lib/modules
 
 # Build
-make -C "$KERNEL_DIR" M="$(pwd)" all
+make all
 
 rm -rf /tmp/r8168.tar.gz /tmp/r8168-${VERSION}
