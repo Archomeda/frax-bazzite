@@ -5,6 +5,13 @@
 # builds actually ran successfully without any errors!
 set -oue pipefail
 
-# Your code goes here.
-echo 'This is an example shell script'
-echo 'Scripts here will run during build if specified in recipe.yml'
+VERSION="8.055.00"
+
+cd /tmp
+wget -q https://github.com/mtorromeo/r8168/archive/refs/tags/${VERSION}.tar.gz -O r8168.tar.gz
+tar xf r8168.tar.gz
+cd r8168-${VERSION}
+
+make all
+
+rm -rf /tmp/r8168.tar.gz /tmp/r8168-${VERSION}

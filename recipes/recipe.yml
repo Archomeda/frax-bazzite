@@ -17,13 +17,21 @@ modules:
       - source: system
         destination: / # copies files/system/* (* means everything inside it) into your image's root folder /
 
-  # Install r8168 driver instead of using the default r8169 driver (see https://github.com/airium/Realtek-PCIe-GBE-NIC-Driver)
+  # Install kernel headers temporarily
   - type: dnf
-    repos:
-      copr:
-        - sunwire/dkms-r8168
     install:
-      packages:
-        - dkms-r8168
+      - kernel-devel
+      - kernel-headers
+
+  # Run r8168 build script
+  - type: script
+    scripts:
+      - install-r8168.sh
+
+  # Remove kernel headers
+  - type: dnf
+    remove:
+      - kernel-devel
+      - kernel-headers
 
   - type: signing # this sets up the proper policy & signing files for signed images to work fully
